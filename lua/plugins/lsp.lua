@@ -17,7 +17,19 @@ return {
     config = function()
         local autoformat_filetypes = {
             "lua",
+            "javascript",
+            "javascriptreact",
+            "typescript",
+            "typescriptreact",
+            "c",
+            "cpp",
+            "java",
+            "python",
+            "json",
+            "html",
+            "prisma",
         }
+
         -- Create a keymap for vim.lsp.buf.implementation
         vim.api.nvim_create_autocmd('LspAttach', {
             callback = function(args)
@@ -27,8 +39,11 @@ return {
                     vim.api.nvim_create_autocmd("BufWritePre", {
                         buffer = args.buf,
                         callback = function()
+                            local shiftwidth = vim.api.nvim_buf_get_option(args.buf, "shiftwidth")
+                            local expandtab = vim.api.nvim_buf_get_option(args.buf, "expandtab")
+
                             vim.lsp.buf.format({
-                                formatting_options = { tabSize = 4, insertSpaces = true },
+                                formatting_options = { tabSize = shiftwidth > 0 and shiftwidth or 4, insertSpaces = expandtab },
                                 bufnr = args.buf,
                                 id = client.id
                             })
@@ -90,7 +105,8 @@ return {
                 vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
                 vim.keymap.set('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>', opts)
                 vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-                vim.keymap.set({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
+                vim.keymap.set({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>',
+                    opts)
                 vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
             end,
         })
