@@ -5,7 +5,7 @@ return {
         local configs = require("nvim-tree")
         configs.setup({
             filters = {
-                dotfiles = true,
+                dotfiles = false,
             },
             git = {
                 enable = true,
