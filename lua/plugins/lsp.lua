@@ -28,6 +28,7 @@ return {
             "json",
             "html",
             "prisma",
+            "rust",
         }
 
         -- Create a keymap for vim.lsp.buf.implementation
@@ -119,6 +120,7 @@ return {
                 "ts_ls",
                 "eslint",
                 "pyright",
+                "rust_analyzer",
             },
             handlers = {
                 function(server_name)
@@ -143,6 +145,17 @@ return {
                         },
                     })
                 end,
+                rust_analyzer = function()
+                    require('lspconfig').rust_analyzer.setup({
+                        settings = {
+                            ['rust-analyzer'] = {
+                                cargo = { allFeatures = true },
+                                checkOnSave = { command = "clippy" },
+                            },
+                        },
+                    })
+                end,
+
             },
         })
 
