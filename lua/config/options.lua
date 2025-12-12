@@ -5,6 +5,8 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 vim.opt.expandtab = true
+vim.opt.title = true
+vim.opt.titlestring = "%f - %{luaeval('vim.fn.getcwd()')}"
 
 vim.cmd("filetype indent off") -- turn off default auto indent nvim uses
 
